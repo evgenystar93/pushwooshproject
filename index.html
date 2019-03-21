@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="//cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
+<script type="text/javascript">
+var Pushwoosh = Pushwoosh || [];
+Pushwoosh.push(['init', {
+    logLevel: 'info', 
+    applicationCode: 'XXXXX-XXXXX', 
+    safariWebsitePushID: 'web.com.example.domain', 
+    defaultNotificationTitle: 'Pushwoosh', 
+    defaultNotificationImage: 'https://yoursite.com/img/logo-medium.png',
+  serviceWorkerUrl: '/push-notifications/pushwoosh-service-worker.js'
+    autoSubscribe: false,
+    subscribeWidget: {
+      enabled: true
+    },
+    userId: 'user_id',
+    tags: {
+        'Name': 'John Smith'
+    }					
+}]);
+</script>
 <link rel="manifest" href="/manifest.json">
 </head>
 <body>
