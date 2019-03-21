@@ -11,10 +11,14 @@ Pushwoosh.push(['init', {
     defaultNotificationTitle: 'Pushwoosh', 
     defaultNotificationImage: 'https://yoursite.com/img/logo-medium.png',
     serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
+    autoSubscribe: false,
+  subscribeWidget: {
+    enable: true,
     userId: 'user_id',
     tags: {
         'Name': 'John Smith'
     }					
+  }
 }]);
 </script>
 </head>
