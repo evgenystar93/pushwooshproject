@@ -1,6 +1,6 @@
 {
-  "name": "Hleb",
-  "short_name": "Hlb",
+  "name": "https://evgenystar93.github.io/pushwooshproject/",
+  "short_name": "Pushwooshproject",
   "gcm_sender_id": "884336678088",
   "display": "standalone",
   "gcm_user_visible_only": true
