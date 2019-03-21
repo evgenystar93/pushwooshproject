@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel=“manifest” href=“./manifest.json”>
-   <script src=“https://cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js” async></script>
-   <script type=“text/javascript”>
-var Pushwoosh = Pushwoosh || [];
-Pushwoosh.push(['init', {
-    logLevel: 'info', 
-    applicationCode: 'D4487-46161', 
-    safariWebsitePushID: 'web.com.example.domain', 
-    defaultNotificationTitle: 'Pushwoosh', 
-    defaultNotificationImage: 'https://yoursite.com/img/logo-medium.png',
-    serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
-    autoSubscribe: false,
-  subscribeWidget: {
-    enable: true,
-    userId: 'user_id',
-    tags: {
-        'Name': 'John Smith'
-    }					
-  }
-}]);
-</script>
+    <meta charset="utf-8">
+    <title>Pushwoosh Test Project</title>
+
+    <link rel="manifest" href="./manifest.json">
+    <script src="https://cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
+    <script>
+        var Pushwoosh = Pushwoosh || [];
+        Pushwoosh.push(["init", {
+          logLevel: 'info',
+          applicationCode: 'D4487-46161',
+          safariWebsitePushID: 'web.com.example.domain',
+          defaultNotificationTitle: 'Pushwoosh',
+          defaultNotificationImage: 'https://cp.pushwoosh.com/img/logo-medium.png',
+          autoSubscribe: false,
+          userId: 'user_id',
+          tags: {
+            'Name': 'John Smith'
+          }
+        }]);
+    </script>
 </head>
 <body>
-<h1>Pushwoosh project</h1>
-<p>Subscribe for pushes!</p>
-
+    <h1>Pushwoosh Web SDK usage sample</h1>
 </body>
 </html>
