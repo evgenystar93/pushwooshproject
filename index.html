@@ -5,18 +5,24 @@
    <title>Pushwoosh Web SDK Sample</title>
    <link rel=“manifest” href=“./manifest.json”>
    <script src=“https://cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js” async></script>
-   <script>
-       var Pushwoosh = Pushwoosh || [];
-       Pushwoosh.push([“init”, {
-         logLevel: ‘info’,
-         applicationCode: ‘D4487-46161’,
-         defaultNotificationTitle: ‘Pushwoosh’,
-         defaultNotificationImage: ‘https://cp.pushwoosh.com/img/logo-medium.png', 
-      autoSubscribe: false,
-         subscribeWidget: {
-          enable: true,
-     }          
+  <script type="text/javascript">
+var Pushwoosh = Pushwoosh || [];
+Pushwoosh.push(['init', {
+    logLevel: 'info', // possible values: error, info, debug
+    applicationCode: 'D4487-46161', // you application code from Pushwoosh Control Panel
+    safariWebsitePushID: 'web.com.example.domain', //  unique reverse-domain string, obtained in you Apple Developer Portal. Only needed if you send push notifications to Safari browser
+    defaultNotificationTitle: 'Pushwoosh', // sets a default title for push notifications
+    defaultNotificationImage: 'https://yoursite.com/img/logo-medium.png', // URL to custom custom notification image
+    autoSubscribe: false, // or true. If true, prompts a user to subscribe for pushes upon SDK initialization
+    subscribeWidget: {
+      enabled: true
+    },
+    userId: 'user_id', // optional, set custom user ID
+    tags: {
+        'Name': 'John Smith'   	// optional, set custom Tags
+    }										
 }]);
+</script>
  </script>
 </body>
     <h1> Test Pushwoosh </h1>
