@@ -8,18 +8,18 @@
    <script>
 var Pushwoosh = Pushwoosh || [];
 Pushwoosh.push(['init', {
-    logLevel: 'info', // possible values: error, info, debug
-    applicationCode: 'D4487-46161', // you application code from Pushwoosh Control Panel
-    safariWebsitePushID: 'web.com.example.domain', //  unique reverse-domain string, obtained in you Apple Developer Portal. Only needed if you send push notifications to Safari browser
-    defaultNotificationTitle: 'Pushwoosh', // sets a default title for push notifications
-    defaultNotificationImage: 'https://cp.pushwoosh.com/img/logo-medium.png', // URL to custom custom notification image
-    autoSubscribe: false, // or true. If true, prompts a user to subscribe for pushes upon SDK initialization
+    logLevel: 'info', 
+    applicationCode: 'D4487-46161', 
+    safariWebsitePushID: 'web.com.example.domain', 
+    defaultNotificationTitle: 'Pushwoosh', 
+    defaultNotificationImage: 'https://cp.pushwoosh.com/img/logo-medium.png', 
+    autoSubscribe: false,
     subscribeWidget: {
       enabled: true
     },
-    userId: 'user_id', // optional, set custom user ID
+    userId: 'user_id', 
     tags: {
-        'Name': 'John Smith'   	// optional, set custom Tags
+        'Name': 'John Smith'
     }										
 }]);
  </script>
