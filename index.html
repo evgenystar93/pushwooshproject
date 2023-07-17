@@ -1,25 +1,67 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-  <link rel="manifest" href="./manifest.json">  
-<script src="//cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
+<html lang="en">
+<head>
+  <link rel="manifest" href="./manifest.json">
+  <script src="//cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
   <script>
-var Pushwoosh = Pushwoosh || [];
-Pushwoosh.push(['init', {
-serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',    
-logLevel: 'info', 
-    applicationCode: 'D4487-46161', 
-    defaultNotificationTitle: 'Pushwoosh', 
-    defaultNotificationImage: 'https://res.cloudinary.com/luxon-wallet/image/upload/v1623214882/successful_ergk2i.png', 
-    autoSubscribe: false,
-    subscribeWidget: {
-      enable: true,
-    },
-    userId: 'user_id', 
-    tags: {
-        'Name': 'Evgeny Starikov'
-    }                   
-}]);
- </script>
+    var Pushwoosh = Pushwoosh || [];
+    
+    if (navigator.userAgent.includes("Chrome")) {
+      Notification.requestPermission().then((result) => {
+        Pushwoosh.push(['init', {
+          serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
+          logLevel: 'info',
+          applicationCode: 'D4487-46161',
+          defaultNotificationTitle: 'Pushwoosh',
+          defaultNotificationImage: 'https://res.cloudinary.com/luxon-wallet/image/upload/v1623214882/successful_ergk2i.png',
+          autoSubscribe: false,
+          subscribeWidget: {
+            enable: false,
+          },
+          userId: 'user_id',
+          tags: {
+            'Name': 'Evgeny Starikov'
+          }
+        }]);
+      });
+    } else {
+      if ('Notification' in window && window.Notification.permission !== 'granted') {
+        window.Notification.requestPermission().then((permission) => {
+          Pushwoosh.push(['init', {
+            serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
+            logLevel: 'info',
+            applicationCode: 'D4487-46161',
+            defaultNotificationTitle: 'Pushwoosh',
+            defaultNotificationImage: 'https://res.cloudinary.com/luxon-wallet/image/upload/v1623214882/successful_ergk2i.png',
+            autoSubscribe: false,
+            subscribeWidget: {
+              enable: false,
+            },
+            userId: 'user_id',
+            tags: {
+              'Name': 'Evgeny Starikov'
+            }
+          }]);
+        });
+      } else {
+        Pushwoosh.push(['init', {
+          serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
+          logLevel: 'info',
+          applicationCode: 'D4487-46161',
+          defaultNotificationTitle: 'Pushwoosh',
+          defaultNotificationImage: 'https://res.cloudinary.com/luxon-wallet/image/upload/v1623214882/successful_ergk2i.png',
+          autoSubscribe: false,
+          subscribeWidget: {
+            enable: false,
+          },
+          userId: 'user_id',
+          tags: {
+            'Name': 'Evgeny Starikov'
+          }
+        }]);
+      }
+    }
+  </script>	
 
   <meta charset="utf-8">
   <title>PW Test Project</title>
