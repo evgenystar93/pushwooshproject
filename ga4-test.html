@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GA4 User-ID test</title>
+
+  <!-- 1. GA4 (gtag.js). Page view is held back until we know the HWID. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MYVWZV2W0D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-MYVWZV2W0D', {
+      send_page_view: false,
+      debug_mode: true          // makes hits show up in GA4 DebugView
+    });
+  </script>
+
+  <!-- 2. Pushwoosh Web SDK, same app and service worker as the main test site -->
+  <script src="//cdn.pushwoosh.com/webpush/v3/pushwoosh-web-notifications.js" async></script>
+  <script>
+    var Pushwoosh = Pushwoosh || [];
+    Pushwoosh.push(['init', {
+      serviceWorkerUrl: '/pushwooshproject/pushwoosh-service-worker.js',
+      logLevel: 'info',
+      applicationCode: 'D4487-46161',
+      defaultNotificationTitle: 'Pushwoosh',
+      autoSubscribe: false,
+      subscribeWidget: { enable: false }
+    }]);
+
+    // 3. When the SDK is ready: take HWID, send it to GA4 and to Pushwoosh as User ID
+    Pushwoosh.push(function (api) {
+      log('Pushwoosh SDK ready');
+      api.getParams().then(function (params) {
+        var hwid = params.hwid;
+        if (!hwid) { log('No HWID returned by getParams()', true); return; }
+        document.getElementById('hwid').textContent = hwid;
+        log('HWID: ' + hwid);
+
+        // GA4: user_id for identity + the same value as user property for export
+        gtag('set', { user_id: hwid });
+        gtag('set', 'user_properties', { pw_user_id: hwid });
+        gtag('event', 'page_view');
+        gtag('event', 'pw_user_identified');
+        log('Sent to GA4: user_id + user property pw_user_id, events page_view and pw_user_identified');
+
+        // Pushwoosh: same value as User ID, so the GA4 CSV can be matched on import
+        return api.registerUser(hwid).then(function () {
+          log('Pushwoosh registerUser(hwid) done');
+        });
+      }).catch(function (e) { log('Error: ' + (e && e.message || e), true); });
+    });
+
+    function subscribe() {
+      Pushwoosh.push(function (api) {
+        api.subscribe().then(function () { log('Subscribed to web push'); })
+          .catch(function (e) { log('Subscribe error: ' + (e && e.message || e), true); });
+      });
+    }
+
+    function log(msg, isError) {
+      var li = document.createElement('li');
+      li.textContent = new Date().toLocaleTimeString() + '  ' + msg;
+      if (isError) li.className = 'err';
+      document.getElementById('log').appendChild(li);
+      console.log('[GA4 test] ' + msg);
+    }
+  </script>
+
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; max-width: 720px;
+           margin: 40px auto; padding: 0 20px; line-height: 1.5; color: #1f2933; }
+    h1 { font-size: 1.6rem; margin-bottom: .25rem; }
+    .hwid { font-family: ui-monospace, Consolas, monospace; background: #eef2f7; padding: 8px 12px;
+            border-radius: 6px; word-break: break-all; }
+    button { font: inherit; padding: 10px 18px; border: 0; border-radius: 6px; background: #1a73e8;
+             color: #fff; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #a8c7fa; outline-offset: 2px; }
+    ul { padding-left: 1.2rem; font-size: .92rem; }
+    .err { color: #b3261e; }
+  </style>
+</head>
+<body>
+  <h1>GA4 User-ID test</h1>
+  <p>This page sends the Pushwoosh HWID to GA4 as <code>user_id</code> and as the user property
+     <code>pw_user_id</code>, and registers the same value as the Pushwoosh User ID.</p>
+
+  <p>HWID of this browser:</p>
+  <p class="hwid" id="hwid">waiting for Pushwoosh SDK…</p>
+
+  <p><button onclick="subscribe()">Subscribe to push</button></p>
+
+  <h2>Log</h2>
+  <ul id="log"></ul>
+</body>
+</html>
